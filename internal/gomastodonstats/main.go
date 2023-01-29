@@ -13,8 +13,8 @@ func Run() {
 
 	// Write to DB
 	updatedMetrics := persistMetrics(metrics)
-
-	sendToMatrix(updatedMetrics)
-
-	postToMastodon(updatedMetrics)
+	if len(updatedMetrics) > 0 {
+		// sendToMatrix(updatedMetrics)
+		postToMastodon(updatedMetrics)
+	}
 }

@@ -16,8 +16,8 @@ func postToMastodon(metrics []metric) {
 
 	c := mastodon.NewClient(&mastodon.Config{
 		Server:       fmt.Sprintf("https://%s", MASTODON_INSTANCE_URL),
-		ClientID:     "client-id",
-		ClientSecret: "client-secret",
+		ClientID:     "go-mastodon-stats",
+		ClientSecret: "randomgeneratedstringthatimnotsureisneeded",
 	})
 	err := c.Authenticate(context.Background(), MASTODON_USERNAME, MASTODON_PASSWORD)
 	if err != nil {
