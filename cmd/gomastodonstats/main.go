@@ -14,6 +14,11 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
+	gms.TIMEZONE = os.Getenv("TIMEZONE")
+	if gms.TIMEZONE == "" {
+		log.Fatal("TIMEZONE not set")
+	}
+
 	// Check Postgres info exists
 	gms.POSTGRESQL_HOST = os.Getenv("POSTGRESQL_HOST")
 	if gms.POSTGRESQL_HOST == "" {
@@ -49,7 +54,7 @@ func main() {
 		gms.MATRIX_WEBHOOK_URL = ""
 	}
 
-	// Load mastodon data if exists
+	// Load mas1odon data if exists
 	gms.MASTODON_INSTANCE_URL = os.Getenv("MASTODON_INSTANCE_URL")
 	gms.MASTODON_CLIENT_ID = os.Getenv("MASTODON_CLIENT_ID")
 	gms.MASTODON_CLIENT_SECRET = os.Getenv("MASTODON_CLIENT_SECRET")
