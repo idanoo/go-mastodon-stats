@@ -28,19 +28,63 @@ func getUserCounts() ([]metric, error) {
 	var metrics []metric
 
 	if PIXELFED_DB_SCHEMA != "" {
-		pfUsers, err := runIntQuery(PIXELFED_DB_SCHEMA, PIXELFED_USER_QUERY)
+		userCount, err := runIntQuery(PIXELFED_DB_SCHEMA, PIXELFED_USER_QUERY)
 		if err != nil {
 			log.Println(err)
 		} else {
-			pfMetric := metric{
-				Service:     "pixelfed",
-				MetricName:  "userCount",
-				MetricValue: pfUsers,
+			m := metric{
+				Service:     PIXELFED_IDENTIFIER,
+				MetricName:  METRICNAME_USERCOUNT,
+				MetricValue: userCount,
 			}
-			log.Printf("Pixelfed user count: %d", pfUsers)
-			metrics = append(metrics, pfMetric)
+			log.Printf("%s user count: %d", PIXELFED_IDENTIFIER, userCount)
+			metrics = append(metrics, m)
 		}
+	}
 
+	if MASTODON_DB_SCHEMA != "" {
+		userCount, err := runIntQuery(MASTODON_DB_SCHEMA, MASTODON_USER_QUERY)
+		if err != nil {
+			log.Println(err)
+		} else {
+			m := metric{
+				Service:     MASTODON_IDENTIFIER,
+				MetricName:  METRICNAME_USERCOUNT,
+				MetricValue: userCount,
+			}
+			log.Printf("%s user count: %d", MASTODON_IDENTIFIER, userCount)
+			metrics = append(metrics, m)
+		}
+	}
+
+	if MOBILIZON_DB_SCHEMA != "" {
+		userCount, err := runIntQuery(MOBILIZON_DB_SCHEMA, MOBILIZON_USER_QUERY)
+		if err != nil {
+			log.Println(err)
+		} else {
+			m := metric{
+				Service:     MOBILIZON_IDENTIFIER,
+				MetricName:  METRICNAME_USERCOUNT,
+				MetricValue: userCount,
+			}
+			log.Printf("%s user count: %d", MOBILIZON_IDENTIFIER, userCount)
+			metrics = append(metrics, m)
+		}
+	}
+
+	if MOBILIZON_DB_SCHEMA != "" {
+		userCount, err := runIntQuery(PEERTUBE_DB_SCHEMA, PEERTUBE_USER_QUERY)
+		if err != nil {
+			log.Println(err)
+		} else {
+			m := metric{
+				Service:     PEERTUBE_IDENTIFIER,
+				MetricName:  METRICNAME_USERCOUNT,
+				MetricValue: userCount,
+			}
+			log.Printf("%s user count: %d", PEERTUBE_IDENTIFIER, userCount)
+			metrics = append(metrics, m)
+		}
 	}
 
 	return metrics, nil

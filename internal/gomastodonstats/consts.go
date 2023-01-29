@@ -10,23 +10,31 @@ var (
 
 	TIMEZONE string
 
+	// UserCount metric name
+	METRICNAME_USERCOUNT = "userCount"
+
 	// Pixelfed
 	PIXELFED_DB_SCHEMA  string
 	PIXELFED_USER_QUERY = "SELECT count(*) FROM users WHERE status IS NULL;"
+	PIXELFED_IDENTIFIER = "pixelfed"
 
 	// Matrix
-	MATRIX_DB_SCHEMA  string
-	MATRIX_USER_QUERY = "SELECT count(*) FROM users WHERE deactivated = 0;"
+	MATRIX_DB_SCHEMA   string
+	MATRIX_USER_QUERY  = "SELECT count(*) FROM users WHERE deactivated = 0;"
+	MATRIX_IDENTIFIDER = "matrix"
 
 	// Mastodon
 	MASTODON_DB_SCHEMA  string
 	MASTODON_USER_QUERY = "SELECT count(*) FROM users WHERE disabled = False;"
+	MASTODON_IDENTIFIER = "mastodon"
 
 	// Mobilizon
 	MOBILIZON_DB_SCHEMA  string
 	MOBILIZON_USER_QUERY = "SELECT count(*) FROM users WHERE disabled = False;"
+	MOBILIZON_IDENTIFIER = "mobilizon"
 
 	// Peertube
 	PEERTUBE_DB_SCHEMA  string
 	PEERTUBE_USER_QUERY = "SELECT count(*) FROM \"user\" WHERE blocked = False;"
+	PEERTUBE_IDENTIFIER = "peertube"
 )
