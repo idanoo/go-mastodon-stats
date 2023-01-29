@@ -24,6 +24,15 @@ var (
 	// UserCount metric name
 	METRICNAME_USERCOUNT = "userCount"
 
+	// This is hardcoded because.. well configs are annoying
+	SERVICE_LINKS = map[string]string{
+		PIXELFED_IDENTIFIER:  "https://pixelfed.nz",
+		MATRIX_IDENTIFIDER:   "https://mtrx.nz",
+		MASTODON_IDENTIFIER:  "https://mastodon.nz",
+		MOBILIZON_IDENTIFIER: "https://openevents.nz",
+		PEERTUBE_IDENTIFIER:  "https//peertube.nz",
+	}
+
 	// Pixelfed
 	PIXELFED_DB_SCHEMA  string
 	PIXELFED_USER_QUERY = "SELECT count(*) FROM users WHERE status IS NULL;"

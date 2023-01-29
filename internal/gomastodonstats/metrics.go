@@ -4,9 +4,6 @@ import (
 	"fmt"
 	"log"
 	"time"
-
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
 )
 
 // Stores out metric/row data
@@ -117,8 +114,5 @@ func getUserCounts() ([]metric, error) {
 }
 
 func getPrintableString(m metric) string {
-	caser := cases.Title(language.English)
-	titleStr := caser.String(m.Service)
-
-	return fmt.Sprintf("%s: %d", titleStr, m.MetricValue)
+	return fmt.Sprintf("%s: %d", SERVICE_LINKS[m.Service], m.MetricValue)
 }
