@@ -15,6 +15,7 @@ type MatrixWebhook struct {
 
 func sendToMatrix(m []metric) {
 	if MATRIX_WEBHOOK_URL == "" {
+		log.Println("Skipping posting to Matrix as missing env vars")
 		return
 	}
 
