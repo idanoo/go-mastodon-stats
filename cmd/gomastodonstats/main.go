@@ -51,12 +51,16 @@ func main() {
 
 	// Load mastodon data if exists
 	gms.MASTODON_INSTANCE_URL = os.Getenv("MASTODON_INSTANCE_URL")
-	gms.MASTODON_USERNAME = os.Getenv("MASTODON_USERNAME")
-	gms.MASTODON_PASSWORD = os.Getenv("MASTODON_PASSWORD")
+	gms.MASTODON_CLIENT_ID = os.Getenv("MASTODON_CLIENT_ID")
+	gms.MASTODON_CLIENT_SECRET = os.Getenv("MASTODON_CLIENT_SECRET")
+	gms.MASTODON_CLIENT_USERNAME = os.Getenv("MASTODON_CLIENT_USERNAME")
+	gms.MASTODON_CLIENT_PASSWORD = os.Getenv("MASTODON_CLIENT_PASSWORD")
 	if gms.MASTODON_INSTANCE_URL == "" ||
-		gms.MASTODON_USERNAME == "" ||
-		gms.MASTODON_PASSWORD == "" {
-		log.Println("MASTODON_INSTANCE_URL info incompelete. Skipping")
+		gms.MASTODON_CLIENT_ID == "" ||
+		gms.MASTODON_CLIENT_SECRET == "" ||
+		gms.MASTODON_CLIENT_USERNAME == "" ||
+		gms.MASTODON_CLIENT_PASSWORD == "" {
+		log.Println("MASTODON_INSTANCE info incompelete. Skipping")
 
 		// Set URL empty so we can check this later on
 		gms.MASTODON_INSTANCE_URL = ""

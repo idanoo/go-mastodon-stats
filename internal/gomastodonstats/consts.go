@@ -14,10 +14,13 @@ var (
 	MATRIX_WEBHOOK_API_KEY string
 	MATRIX_WEBHOOK_CHANNEL string
 
-	MASTODON_INSTANCE_URL string
-	MASTODON_USERNAME     string
-	MASTODON_PASSWORD     string
-	MASTODON_CLIENT_NAME  = "go-mastodon-stats"
+	MASTODON_CLIENT_NAME     = "go-mastodon-stats"
+	MASTODON_INSTANCE_URL    string
+	MASTODON_CLIENT_ID       string
+	MASTODON_CLIENT_SECRET   string
+	MASTODON_CLIENT_USERNAME string
+	MASTODON_CLIENT_PASSWORD string
+
 	// UserCount metric name
 	METRICNAME_USERCOUNT = "userCount"
 
