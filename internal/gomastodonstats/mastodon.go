@@ -18,6 +18,10 @@ func registerApp() (string, string, error) {
 	if err != nil {
 		return "", "", err
 	}
+
+	fmt.Printf("client-id    : %s\n", app.ClientID)
+	fmt.Printf("client-secret: %s\n", app.ClientSecret)
+
 	return app.ClientID, app.ClientSecret, nil
 }
 
