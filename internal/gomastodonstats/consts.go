@@ -30,7 +30,7 @@ var (
 		MATRIX_IDENTIFIDER:   "https://mtrx.nz",
 		MASTODON_IDENTIFIER:  "https://mastodon.nz",
 		MOBILIZON_IDENTIFIER: "https://openevents.nz",
-		PEERTUBE_IDENTIFIER:  "https//peertube.nz",
+		PEERTUBE_IDENTIFIER:  "https://peertube.nz",
 	}
 
 	// Pixelfed

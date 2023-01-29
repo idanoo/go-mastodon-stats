@@ -19,7 +19,7 @@ func Run() {
 	if len(updatedMetrics) > 0 {
 		// Sort by counts!
 		sort.Slice(updatedMetrics, func(i, j int) bool {
-			return updatedMetrics[i].MetricValue < updatedMetrics[j].MetricValue
+			return updatedMetrics[i].MetricValue > updatedMetrics[j].MetricValue
 		})
 
 		sendToMatrix(updatedMetrics)
