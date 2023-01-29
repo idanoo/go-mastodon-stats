@@ -3,7 +3,6 @@ package gomastodonstats
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 )
@@ -14,21 +13,15 @@ type MatrixWebhook struct {
 }
 
 func sendToMatrix(m []metric) {
-	if MATRIX_WEBHOOK_URL == "" {
+	if MATRIX_WEBHOOK_URL == "" || len(m) == 0 {
 		log.Println("Skipping posting to Matrix as missing env vars")
 		return
 	}
 
 	startOfDay := getStartofDay()
-	msg := fmt.Sprintf(
-		"*User stats for %d:*\n%s",
-		startOfDay,
-		getPrintableString(m),
-	)
-
-	err := sendMatrixWebhook(msg, MATRIX_WEBHOOK_CHANNEL)
-	if err != nil {
-		log.Print(err)
+	sendMatrixWebhook(startOfDay.String(), MATRIX_WEBHOOK_CHANNEL)
+	for _, m := range m {
+		sendMatrixWebhook(getPrintableString(m), MATRIX_WEBHOOK_CHANNEL)
 	}
 }
 

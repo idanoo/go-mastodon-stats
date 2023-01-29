@@ -113,12 +113,6 @@ func getUserCounts() ([]metric, error) {
 	return metrics, nil
 }
 
-func getPrintableString(m []metric) string {
-	output := ""
-
-	for _, v := range m {
-		output = fmt.Sprintf("%s\n%s: %d", output, v.Service, v.MetricValue)
-	}
-
-	return output
+func getPrintableString(m metric) string {
+	return fmt.Sprintf("%s: %d", m.Service, m.MetricValue)
 }
