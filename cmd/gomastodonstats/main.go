@@ -39,7 +39,7 @@ func main() {
 	// Load matrix data if exists, else set URL blank
 	gms.MATRIX_WEBHOOK_URL = os.Getenv("MATRIX_WEBHOOK_URL")
 	gms.MATRIX_WEBHOOK_API_KEY = os.Getenv("MATRIX_WEBHOOK_API_KEY")
-	gms.MATRIX_WEBHOOK_CHANNEL = os.Getenv("MATRIX_ACCOUNT_CHANNEL")
+	gms.MATRIX_WEBHOOK_CHANNEL = os.Getenv("MATRIX_WEBHOOK_CHANNEL")
 	if gms.MATRIX_WEBHOOK_URL == "" ||
 		gms.MATRIX_WEBHOOK_API_KEY == "" ||
 		gms.MATRIX_WEBHOOK_CHANNEL == "" {

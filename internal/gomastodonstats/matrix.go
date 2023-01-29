@@ -14,10 +14,13 @@ type MatrixWebhook struct {
 }
 
 func sendToMatrix(m []metric) {
+	if MATRIX_WEBHOOK_URL == "" {
+		return
+	}
 
 	startOfDay := getStartofDay()
 	msg := fmt.Sprintf(
-		"*User stats for %d:*\n\n",
+		"*User stats for %d:*\n%s",
 		startOfDay,
 		getPrintableString(m),
 	)
