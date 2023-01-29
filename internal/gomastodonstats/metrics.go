@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 // Stores out metric/row data
@@ -116,5 +117,8 @@ func getUserCounts() ([]metric, error) {
 }
 
 func getPrintableString(m metric) string {
-	return fmt.Sprintf("%s: %d", cases.Title(m.Service), m.MetricValue)
+	caser := cases.Title(language.English)
+	titleStr := caser.String(m.Service)
+
+	return fmt.Sprintf("%s: %d", titleStr, m.MetricValue)
 }
