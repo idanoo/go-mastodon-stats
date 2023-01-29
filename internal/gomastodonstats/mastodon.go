@@ -8,18 +8,37 @@ import (
 	"github.com/mattn/go-mastodon"
 )
 
+func registerApp() (string, string, error) {
+	app, err := mastodon.RegisterApp(context.Background(), &mastodon.AppConfig{
+		Server:     fmt.Sprintf("https://%s", MASTODON_INSTANCE_URL),
+		ClientName: MASTODON_CLIENT_NAME,
+		Scopes:     "read write follow",
+		Website:    "https://github.com/mattn/go-mastodon",
+	})
+	if err != nil {
+		return "", "", err
+	}
+	return app.ClientID, app.ClientSecret, nil
+}
+
 func postToMastodon(metrics []metric) {
 	if MASTODON_INSTANCE_URL == "" {
 		log.Printf("Skipping posting to mastodon. Missing configuration")
 		return
 	}
 
+	clientId, clientSecret, err := registerApp()
+	if err != nil {
+		log.Print(err)
+		return
+	}
+
 	c := mastodon.NewClient(&mastodon.Config{
 		Server:       fmt.Sprintf("https://%s", MASTODON_INSTANCE_URL),
-		ClientID:     "go-mastodon-stats",
-		ClientSecret: "randomgeneratedstringthatimnotsureisneeded",
+		ClientID:     clientId,
+		ClientSecret: clientSecret,
 	})
-	err := c.Authenticate(context.Background(), MASTODON_USERNAME, MASTODON_PASSWORD)
+	err = c.Authenticate(context.Background(), MASTODON_USERNAME, MASTODON_PASSWORD)
 	if err != nil {
 		log.Println("Invalid mastodon credentials?")
 		log.Print(err)

@@ -17,7 +17,7 @@ var (
 	MASTODON_INSTANCE_URL string
 	MASTODON_USERNAME     string
 	MASTODON_PASSWORD     string
-
+	MASTODON_CLIENT_NAME  = "go-mastodon-stats"
 	// UserCount metric name
 	METRICNAME_USERCOUNT = "userCount"
 
