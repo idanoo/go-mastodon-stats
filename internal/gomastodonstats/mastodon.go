@@ -27,7 +27,7 @@ func postToMastodon(metrics []metric) {
 
 	// Build status
 	startOfDay := getStartofDay()
-	msg := fmt.Sprintf("Weekly user counts @ %d-%d-%d :laserkiwi:\n\n", startOfDay.Local().Year(), startOfDay.Local().Month(), startOfDay.Local().Day())
+	msg := fmt.Sprintf("Weekly user counts @ %d-%d-%d :laserkiwi:\n\n", startOfDay.Year(), startOfDay.Month(), startOfDay.Day())
 	for _, m := range metrics {
 		msg = msg + getPrintableString(m) + "\n"
 	}
