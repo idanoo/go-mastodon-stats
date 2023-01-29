@@ -42,6 +42,21 @@ func getUserCounts() ([]metric, error) {
 		}
 	}
 
+	if MATRIX_DB_SCHEMA != "" {
+		userCount, err := runIntQuery(MATRIX_DB_SCHEMA, MATRIX_USER_QUERY)
+		if err != nil {
+			log.Println(err)
+		} else {
+			m := metric{
+				Service:     MATRIX_IDENTIFIDER,
+				MetricName:  METRICNAME_USERCOUNT,
+				MetricValue: userCount,
+			}
+			log.Printf("%s user count: %d", MATRIX_IDENTIFIDER, userCount)
+			metrics = append(metrics, m)
+		}
+	}
+
 	if MASTODON_DB_SCHEMA != "" {
 		userCount, err := runIntQuery(MASTODON_DB_SCHEMA, MASTODON_USER_QUERY)
 		if err != nil {
@@ -72,7 +87,7 @@ func getUserCounts() ([]metric, error) {
 		}
 	}
 
-	if MOBILIZON_DB_SCHEMA != "" {
+	if PEERTUBE_DB_SCHEMA != "" {
 		userCount, err := runIntQuery(PEERTUBE_DB_SCHEMA, PEERTUBE_USER_QUERY)
 		if err != nil {
 			log.Println(err)
