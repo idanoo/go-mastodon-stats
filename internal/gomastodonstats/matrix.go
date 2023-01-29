@@ -3,6 +3,7 @@ package gomastodonstats
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 )
@@ -19,7 +20,7 @@ func sendToMatrix(m []metric) {
 	}
 
 	startOfDay := getStartofDay()
-	sendMatrixWebhook(startOfDay.String(), MATRIX_WEBHOOK_CHANNEL)
+	sendMatrixWebhook(fmt.Sprintf("*User counts for %s*", startOfDay.String()), MATRIX_WEBHOOK_CHANNEL)
 	for _, m := range m {
 		sendMatrixWebhook(getPrintableString(m), MATRIX_WEBHOOK_CHANNEL)
 	}
