@@ -15,4 +15,6 @@ func Run() {
 	updatedMetrics := persistMetrics(metrics)
 
 	sendToMatrix(updatedMetrics)
+
+	postToMastodon(updatedMetrics)
 }

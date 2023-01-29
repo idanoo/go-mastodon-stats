@@ -49,6 +49,19 @@ func main() {
 		gms.MATRIX_WEBHOOK_URL = ""
 	}
 
+	// Load mastodon data if exists
+	gms.MASTODON_INSTANCE_URL = os.Getenv("MASTODON_INSTANCE_URL")
+	gms.MASTODON_USERNAME = os.Getenv("MASTODON_USERNAME")
+	gms.MASTODON_PASSWORD = os.Getenv("MASTODON_PASSWORD")
+	if gms.MASTODON_INSTANCE_URL == "" ||
+		gms.MASTODON_USERNAME == "" ||
+		gms.MASTODON_PASSWORD == "" {
+		log.Println("MASTODON_INSTANCE_URL info incompelete. Skipping")
+
+		// Set URL empty so we can check this later on
+		gms.MASTODON_INSTANCE_URL = ""
+	}
+
 	// Load schemas if set
 	gms.PIXELFED_DB_SCHEMA = os.Getenv("PIXELFED_DB_SCHEMA")
 	gms.MATRIX_DB_SCHEMA = os.Getenv("MATRIX_DB_SCHEMA")

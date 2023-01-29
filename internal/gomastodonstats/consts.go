@@ -14,6 +14,10 @@ var (
 	MATRIX_WEBHOOK_API_KEY string
 	MATRIX_WEBHOOK_CHANNEL string
 
+	MASTODON_INSTANCE_URL string
+	MASTODON_USERNAME     string
+	MASTODON_PASSWORD     string
+
 	// UserCount metric name
 	METRICNAME_USERCOUNT = "userCount"
 
