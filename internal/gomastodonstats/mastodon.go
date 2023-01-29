@@ -21,7 +21,8 @@ func postToMastodon(metrics []metric) {
 	})
 	err := c.Authenticate(context.Background(), MASTODON_USERNAME, MASTODON_PASSWORD)
 	if err != nil {
-		log.Println("Invalid mastodon credentials")
+		log.Println("Invalid mastodon credentials?")
+		log.Print(err)
 		return
 	}
 
