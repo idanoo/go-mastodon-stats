@@ -10,6 +10,10 @@ var (
 
 	TIMEZONE string
 
+	MATRIX_WEBHOOK_URL     string
+	MATRIX_WEBHOOK_API_KEY string
+	MATRIX_WEBHOOK_CHANNEL string
+
 	// UserCount metric name
 	METRICNAME_USERCOUNT = "userCount"
 

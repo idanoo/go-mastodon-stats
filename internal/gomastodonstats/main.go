@@ -12,7 +12,7 @@ func Run() {
 	}
 
 	// Write to DB
-	persistMetrics(metrics)
+	updatedMetrics := persistMetrics(metrics)
 
-	// Output example
+	sendToMatrix(updatedMetrics)
 }

@@ -36,6 +36,19 @@ func main() {
 
 	}
 
+	// Load matrix data if exists, else set URL blank
+	gms.MATRIX_WEBHOOK_URL = os.Getenv("MATRIX_WEBHOOK_URL")
+	gms.MATRIX_WEBHOOK_API_KEY = os.Getenv("MATRIX_WEBHOOK_API_KEY")
+	gms.MATRIX_WEBHOOK_CHANNEL = os.Getenv("MATRIX_ACCOUNT_CHANNEL")
+	if gms.MATRIX_WEBHOOK_URL == "" ||
+		gms.MATRIX_WEBHOOK_API_KEY == "" ||
+		gms.MATRIX_WEBHOOK_CHANNEL == "" {
+		log.Println("MATRIX_WEBHOOK info incompelete. Skipping")
+
+		// Set URL empty so we can check this later on
+		gms.MATRIX_WEBHOOK_URL = ""
+	}
+
 	// Load schemas if set
 	gms.PIXELFED_DB_SCHEMA = os.Getenv("PIXELFED_DB_SCHEMA")
 	gms.MATRIX_DB_SCHEMA = os.Getenv("MATRIX_DB_SCHEMA")

@@ -1,6 +1,7 @@
 package gomastodonstats
 
 import (
+	"fmt"
 	"log"
 	"time"
 )
@@ -13,15 +14,22 @@ type metric struct {
 	MetricValue int       `json:"metric_value"`
 }
 
-func persistMetrics(metrics []metric) {
+// persistMetrics - return any updated
+func persistMetrics(metrics []metric) []metric {
+	var updatedMetrics []metric
+
 	startOfDay := getStartofDay()
 	for _, v := range metrics {
 		v.MetricTime = startOfDay
 		err := insertValues(v)
 		if err != nil {
 			log.Println(err)
+		} else {
+			updatedMetrics = append(updatedMetrics, v)
 		}
 	}
+
+	return updatedMetrics
 }
 
 func getUserCounts() ([]metric, error) {
@@ -103,4 +111,14 @@ func getUserCounts() ([]metric, error) {
 	}
 
 	return metrics, nil
+}
+
+func getPrintableString(m []metric) string {
+	output := ""
+
+	for _, v := range m {
+		output = fmt.Sprintf("%s\n%s: %d", output, v.Service, v.MetricValue)
+	}
+
+	return output
 }
