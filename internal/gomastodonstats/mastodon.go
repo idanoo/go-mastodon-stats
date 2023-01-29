@@ -31,6 +31,7 @@ func postToMastodon(metrics []metric) {
 	for _, m := range metrics {
 		msg = msg + getPrintableString(m) + "\n"
 	}
+	msg = msg + "\n\n" + "#Stats"
 
 	toot := mastodon.Toot{
 		Status: msg,
