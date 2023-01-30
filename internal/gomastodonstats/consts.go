@@ -45,7 +45,7 @@ var (
 
 	// Mastodon
 	MASTODON_DB_SCHEMA  string
-	MASTODON_USER_QUERY = "SELECT count(*) FROM users WHERE disabled = False;"
+	MASTODON_USER_QUERY = "SELECT count(*) FROM users WHERE disabled = False AND confirmed_at IS NOT NULL AND approved = True;"
 	MASTODON_IDENTIFIER = "mastodon"
 
 	// Mobilizon

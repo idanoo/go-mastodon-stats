@@ -8,10 +8,11 @@ import (
 
 // Stores out metric/row data
 type metric struct {
-	Service     string    `json:"service"`
-	MetricName  string    `json:"metric_name"`
-	MetricTime  time.Time `json:"metric_time"`
-	MetricValue int       `json:"metric_value"`
+	Service             string    `json:"service"`
+	MetricName          string    `json:"metric_name"`
+	MetricTime          time.Time `json:"metric_time"`
+	MetricValue         int       `json:"metric_value"`
+	PreviousMetricValue int       `json:"-"`
 }
 
 // persistMetrics - return any updated
@@ -41,9 +42,10 @@ func getUserCounts() ([]metric, error) {
 			log.Println(err)
 		} else {
 			m := metric{
-				Service:     PIXELFED_IDENTIFIER,
-				MetricName:  METRICNAME_USERCOUNT,
-				MetricValue: userCount,
+				Service:             PIXELFED_IDENTIFIER,
+				MetricName:          METRICNAME_USERCOUNT,
+				MetricValue:         userCount,
+				PreviousMetricValue: getLastMetric(PIXELFED_IDENTIFIER),
 			}
 			log.Printf("%s user count: %d", PIXELFED_IDENTIFIER, userCount)
 			metrics = append(metrics, m)
@@ -56,9 +58,10 @@ func getUserCounts() ([]metric, error) {
 			log.Println(err)
 		} else {
 			m := metric{
-				Service:     MATRIX_IDENTIFIDER,
-				MetricName:  METRICNAME_USERCOUNT,
-				MetricValue: userCount,
+				Service:             MATRIX_IDENTIFIDER,
+				MetricName:          METRICNAME_USERCOUNT,
+				MetricValue:         userCount,
+				PreviousMetricValue: getLastMetric(MATRIX_IDENTIFIDER),
 			}
 			log.Printf("%s user count: %d", MATRIX_IDENTIFIDER, userCount)
 			metrics = append(metrics, m)
@@ -71,9 +74,10 @@ func getUserCounts() ([]metric, error) {
 			log.Println(err)
 		} else {
 			m := metric{
-				Service:     MASTODON_IDENTIFIER,
-				MetricName:  METRICNAME_USERCOUNT,
-				MetricValue: userCount,
+				Service:             MASTODON_IDENTIFIER,
+				MetricName:          METRICNAME_USERCOUNT,
+				MetricValue:         userCount,
+				PreviousMetricValue: getLastMetric(MASTODON_IDENTIFIER),
 			}
 			log.Printf("%s user count: %d", MASTODON_IDENTIFIER, userCount)
 			metrics = append(metrics, m)
@@ -86,9 +90,10 @@ func getUserCounts() ([]metric, error) {
 			log.Println(err)
 		} else {
 			m := metric{
-				Service:     MOBILIZON_IDENTIFIER,
-				MetricName:  METRICNAME_USERCOUNT,
-				MetricValue: userCount,
+				Service:             MOBILIZON_IDENTIFIER,
+				MetricName:          METRICNAME_USERCOUNT,
+				MetricValue:         userCount,
+				PreviousMetricValue: getLastMetric(MOBILIZON_IDENTIFIER),
 			}
 			log.Printf("%s user count: %d", MOBILIZON_IDENTIFIER, userCount)
 			metrics = append(metrics, m)
@@ -101,9 +106,10 @@ func getUserCounts() ([]metric, error) {
 			log.Println(err)
 		} else {
 			m := metric{
-				Service:     PEERTUBE_IDENTIFIER,
-				MetricName:  METRICNAME_USERCOUNT,
-				MetricValue: userCount,
+				Service:             PEERTUBE_IDENTIFIER,
+				MetricName:          METRICNAME_USERCOUNT,
+				MetricValue:         userCount,
+				PreviousMetricValue: getLastMetric(PEERTUBE_IDENTIFIER),
 			}
 			log.Printf("%s user count: %d", PEERTUBE_IDENTIFIER, userCount)
 			metrics = append(metrics, m)
@@ -114,5 +120,32 @@ func getUserCounts() ([]metric, error) {
 }
 
 func getPrintableString(m metric) string {
-	return fmt.Sprintf("%s: %d", SERVICE_LINKS[m.Service], m.MetricValue)
+	output := fmt.Sprintf("%s: %d", SERVICE_LINKS[m.Service], m.MetricValue)
+	diff := m.MetricValue - m.PreviousMetricValue
+	if diff < 0 {
+		output = fmt.Sprintf("%s (%d)", output, diff)
+	} else if diff > 0 {
+		output = fmt.Sprintf("%s (+%d)", output, diff)
+	}
+
+	return output
+}
+
+func getLastMetric(serviceName string) int {
+	val, err := runIntQuery(
+		POSTGRESQL_STATS_DB,
+		fmt.Sprintf(
+			"SELECT metric_value FROM %s WHERE metric_name = '%s' AND service = '%s' ORDER BY metric_time DESC LIMIT 1",
+			POSTGRESQL_STATS_TABLE,
+			METRICNAME_USERCOUNT,
+			serviceName,
+		),
+	)
+
+	if err != nil {
+		log.Println(err)
+		return 0
+	}
+
+	return val
 }
