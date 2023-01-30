@@ -1,0 +1,12 @@
+[Unit]
+Description=Add stats to mastodon/etc
+Wants=stats.timer
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=/root/go-mastodon-stats
+ExecStart=/usr/local/go/bin/go run cmd/gomastodonstats/main.go
+
+[Install]
+WantedBy=multi-user.target

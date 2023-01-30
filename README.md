@@ -1,5 +1,12 @@
-Create readonly account with access to stats DB
+# go-mastodon-stats
+Pulls in a bunch of stats from services, sends to a statsdb schema and posts to matrix/mastodon weekly.
 
+Setup a new application, use the ID/SECRET in your .env with some user creds
+> https://mastodon.nz/settings/applications/new
+    
+
+
+Create readonly account with access to stats DB
 
 ```
 CREATE USER gomastodonstats WITH PASSWORD 'superrandompassword';

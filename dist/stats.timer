@@ -1,0 +1,10 @@
+[Unit]
+Description=Run stats on Monday
+Requires=stats.service
+
+[Timer]
+Unit=stats.service
+OnCalendar=Weekly Pacific/Auckland
+
+[Install]
+WantedBy=timers.target
