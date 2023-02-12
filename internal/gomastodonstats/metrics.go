@@ -165,7 +165,7 @@ func getLastWeekMetric(serviceName string) int {
 	val, err := runIntQuery(
 		POSTGRESQL_STATS_DB,
 		fmt.Sprintf(
-			"SELECT metric_value FROM %s WHERE metric_name = '%s' AND service = '%s' AND metric_time = '%d' DESC LIMIT 1",
+			"SELECT metric_value FROM %s WHERE metric_name = '%s' AND service = '%s' AND metric_time = '%d' LIMIT 1",
 			POSTGRESQL_STATS_TABLE,
 			METRICNAME_USERCOUNT,
 			serviceName,
