@@ -162,6 +162,13 @@ func getLastMetric(serviceName string) int {
 
 func getLastWeekMetric(serviceName string) int {
 	monday := getStartofDayMonday()
+	log.Printf(
+		"SELECT metric_value FROM %s WHERE metric_name = '%s' AND service = '%s' AND metric_time = '%s' LIMIT 1",
+		POSTGRESQL_STATS_TABLE,
+		METRICNAME_USERCOUNT,
+		serviceName,
+		monday,
+	)
 	val, err := runIntQuery(
 		POSTGRESQL_STATS_DB,
 		fmt.Sprintf(
