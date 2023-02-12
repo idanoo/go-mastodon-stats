@@ -8,11 +8,12 @@ import (
 
 // Stores out metric/row data
 type metric struct {
-	Service             string    `json:"service"`
-	MetricName          string    `json:"metric_name"`
-	MetricTime          time.Time `json:"metric_time"`
-	MetricValue         int       `json:"metric_value"`
-	PreviousMetricValue int       `json:"-"`
+	Service                 string    `json:"service"`
+	MetricName              string    `json:"metric_name"`
+	MetricTime              time.Time `json:"metric_time"`
+	MetricValue             int       `json:"metric_value"`
+	PreviousDayMetricValue  int       `json:"-"`
+	PreviousWeekMetricValue int       `json:"-"`
 }
 
 // persistMetrics - return any updated
@@ -42,10 +43,11 @@ func getUserCounts() ([]metric, error) {
 			log.Println(err)
 		} else {
 			m := metric{
-				Service:             PIXELFED_IDENTIFIER,
-				MetricName:          METRICNAME_USERCOUNT,
-				MetricValue:         userCount,
-				PreviousMetricValue: getLastMetric(PIXELFED_IDENTIFIER),
+				Service:                 PIXELFED_IDENTIFIER,
+				MetricName:              METRICNAME_USERCOUNT,
+				MetricValue:             userCount,
+				PreviousDayMetricValue:  getLastMetric(PIXELFED_IDENTIFIER),
+				PreviousWeekMetricValue: getLastWeekMetric(PIXELFED_IDENTIFIER),
 			}
 			log.Printf("%s user count: %d", PIXELFED_IDENTIFIER, userCount)
 			metrics = append(metrics, m)
@@ -58,10 +60,11 @@ func getUserCounts() ([]metric, error) {
 			log.Println(err)
 		} else {
 			m := metric{
-				Service:             MATRIX_IDENTIFIDER,
-				MetricName:          METRICNAME_USERCOUNT,
-				MetricValue:         userCount,
-				PreviousMetricValue: getLastMetric(MATRIX_IDENTIFIDER),
+				Service:                 MATRIX_IDENTIFIDER,
+				MetricName:              METRICNAME_USERCOUNT,
+				MetricValue:             userCount,
+				PreviousDayMetricValue:  getLastMetric(MATRIX_IDENTIFIDER),
+				PreviousWeekMetricValue: getLastWeekMetric(MATRIX_IDENTIFIDER),
 			}
 			log.Printf("%s user count: %d", MATRIX_IDENTIFIDER, userCount)
 			metrics = append(metrics, m)
@@ -74,10 +77,11 @@ func getUserCounts() ([]metric, error) {
 			log.Println(err)
 		} else {
 			m := metric{
-				Service:             MASTODON_IDENTIFIER,
-				MetricName:          METRICNAME_USERCOUNT,
-				MetricValue:         userCount,
-				PreviousMetricValue: getLastMetric(MASTODON_IDENTIFIER),
+				Service:                 MASTODON_IDENTIFIER,
+				MetricName:              METRICNAME_USERCOUNT,
+				MetricValue:             userCount,
+				PreviousDayMetricValue:  getLastMetric(MASTODON_IDENTIFIER),
+				PreviousWeekMetricValue: getLastWeekMetric(MASTODON_IDENTIFIER),
 			}
 			log.Printf("%s user count: %d", MASTODON_IDENTIFIER, userCount)
 			metrics = append(metrics, m)
@@ -90,10 +94,11 @@ func getUserCounts() ([]metric, error) {
 			log.Println(err)
 		} else {
 			m := metric{
-				Service:             MOBILIZON_IDENTIFIER,
-				MetricName:          METRICNAME_USERCOUNT,
-				MetricValue:         userCount,
-				PreviousMetricValue: getLastMetric(MOBILIZON_IDENTIFIER),
+				Service:                 MOBILIZON_IDENTIFIER,
+				MetricName:              METRICNAME_USERCOUNT,
+				MetricValue:             userCount,
+				PreviousDayMetricValue:  getLastMetric(MOBILIZON_IDENTIFIER),
+				PreviousWeekMetricValue: getLastWeekMetric(MOBILIZON_IDENTIFIER),
 			}
 			log.Printf("%s user count: %d", MOBILIZON_IDENTIFIER, userCount)
 			metrics = append(metrics, m)
@@ -106,10 +111,11 @@ func getUserCounts() ([]metric, error) {
 			log.Println(err)
 		} else {
 			m := metric{
-				Service:             PEERTUBE_IDENTIFIER,
-				MetricName:          METRICNAME_USERCOUNT,
-				MetricValue:         userCount,
-				PreviousMetricValue: getLastMetric(PEERTUBE_IDENTIFIER),
+				Service:                 PEERTUBE_IDENTIFIER,
+				MetricName:              METRICNAME_USERCOUNT,
+				MetricValue:             userCount,
+				PreviousDayMetricValue:  getLastMetric(PEERTUBE_IDENTIFIER),
+				PreviousWeekMetricValue: getLastWeekMetric(PEERTUBE_IDENTIFIER),
 			}
 			log.Printf("%s user count: %d", PEERTUBE_IDENTIFIER, userCount)
 			metrics = append(metrics, m)
@@ -119,9 +125,13 @@ func getUserCounts() ([]metric, error) {
 	return metrics, nil
 }
 
-func getPrintableString(m metric) string {
+func getPrintableString(m metric, useWeek bool) string {
 	output := fmt.Sprintf("%s: %d", SERVICE_LINKS[m.Service], m.MetricValue)
-	diff := m.MetricValue - m.PreviousMetricValue
+	diff := m.MetricValue - m.PreviousDayMetricValue
+	if useWeek {
+		diff = m.MetricValue - m.PreviousWeekMetricValue
+	}
+
 	if diff < 0 {
 		output = fmt.Sprintf("%s (%d)", output, diff)
 	} else if diff > 0 {
@@ -139,6 +149,27 @@ func getLastMetric(serviceName string) int {
 			POSTGRESQL_STATS_TABLE,
 			METRICNAME_USERCOUNT,
 			serviceName,
+		),
+	)
+
+	if err != nil {
+		log.Println(err)
+		return 0
+	}
+
+	return val
+}
+
+func getLastWeekMetric(serviceName string) int {
+	monday := getStartofDayMonday()
+	val, err := runIntQuery(
+		POSTGRESQL_STATS_DB,
+		fmt.Sprintf(
+			"SELECT metric_value FROM %s WHERE metric_name = '%s' AND service = '%s' AND metric_time = '%d' DESC LIMIT 1",
+			POSTGRESQL_STATS_TABLE,
+			METRICNAME_USERCOUNT,
+			serviceName,
+			monday,
 		),
 	)
 

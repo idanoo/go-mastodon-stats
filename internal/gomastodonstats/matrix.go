@@ -22,7 +22,7 @@ func sendToMatrix(m []metric) {
 	startOfDay := getStartofDay()
 	sendMatrixWebhook(fmt.Sprintf("*User counts for %s*", startOfDay.String()), MATRIX_WEBHOOK_CHANNEL)
 	for _, m := range m {
-		sendMatrixWebhook(getPrintableString(m), MATRIX_WEBHOOK_CHANNEL)
+		sendMatrixWebhook(getPrintableString(m, false), MATRIX_WEBHOOK_CHANNEL)
 	}
 }
 

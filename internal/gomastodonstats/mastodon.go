@@ -29,7 +29,7 @@ func postToMastodon(metrics []metric) {
 	startOfDay := getStartofDay()
 	msg := fmt.Sprintf("Weekly user counts @ %d-%d-%d :laserkiwi:\n\n", startOfDay.Year(), startOfDay.Month(), startOfDay.Day())
 	for _, m := range metrics {
-		msg = msg + getPrintableString(m) + "\n"
+		msg = msg + getPrintableString(m, true) + "\n"
 	}
 	msg = msg + "\n\n" + "#WeeklyStats"
 

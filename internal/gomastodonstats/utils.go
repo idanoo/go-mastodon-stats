@@ -14,3 +14,17 @@ func getStartofDay() time.Time {
 	year, month, day := t.Date()
 	return time.Date(year, month, day, 0, 0, 0, 0, t.Location())
 }
+
+func getStartofDayMonday() time.Time {
+	localTime, err := time.LoadLocation(TIMEZONE)
+	if err != nil {
+		log.Fatal(err)
+	}
+	// Iterate until Monday!
+	t := time.Now().In(localTime)
+	for t.Weekday() != time.Monday {
+		t = t.AddDate(0, 0, -1)
+	}
+	year, month, day := t.Date()
+	return time.Date(year, month, day, 0, 0, 0, 0, t.Location())
+}
