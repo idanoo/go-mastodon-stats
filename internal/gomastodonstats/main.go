@@ -3,6 +3,7 @@ package gomastodonstats
 import (
 	"log"
 	"sort"
+	"time"
 )
 
 func Run() {
@@ -22,16 +23,16 @@ func Run() {
 			return updatedMetrics[i].MetricValue > updatedMetrics[j].MetricValue
 		})
 
-		// sendToMatrix(updatedMetrics)
+		sendToMatrix(updatedMetrics)
 
 		// Only post weekly here
-		// localTime, err := time.LoadLocation(TIMEZONE)
-		// if err != nil {
-		// 	log.Fatal(err)
-		// }
-		// weekday := time.Now().Local().In(localTime).Weekday()
-		// if weekday == time.Monday {
-		// 	postToMastodon(updatedMetrics)
-		// }
+		localTime, err := time.LoadLocation(TIMEZONE)
+		if err != nil {
+			log.Fatal(err)
+		}
+		weekday := time.Now().Local().In(localTime).Weekday()
+		if weekday == time.Monday {
+			postToMastodon(updatedMetrics)
+		}
 	}
 }

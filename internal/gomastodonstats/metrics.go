@@ -173,8 +173,6 @@ func getLastWeekMetric(serviceName string) int {
 		monday,
 	)
 
-	log.Println(val)
-
 	if err != nil {
 		log.Println(err)
 		return 0
