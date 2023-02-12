@@ -22,6 +22,7 @@ func getStartofDayMonday() time.Time {
 	}
 	// Iterate until Monday!
 	t := time.Now().In(localTime)
+	t = t.AddDate(0, 0, -1)
 	for t.Weekday() != time.Monday {
 		t = t.AddDate(0, 0, -1)
 	}
