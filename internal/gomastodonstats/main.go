@@ -3,6 +3,7 @@ package gomastodonstats
 import (
 	"log"
 	"sort"
+	"time"
 )
 
 func Run() {
@@ -23,6 +24,11 @@ func Run() {
 		})
 
 		sendToMatrix(updatedMetrics)
-		postToMastodon(updatedMetrics)
+
+		// Only post weekly here
+		weekday := time.Now().Weekday()
+		if weekday == time.Monday {
+			postToMastodon(updatedMetrics)
+		}
 	}
 }
