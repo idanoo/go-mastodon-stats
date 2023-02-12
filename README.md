@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS statsdb (
 	id SERIAL,
 	service VARCHAR(50) NOT NULL,
 	metric_name VARCHAR(50) NOT NULL,
-    metric_time TIMESTAMP NOT NULL,
+    metric_time TIMESTAMPTZ NOT NULL,
 	metric_value INT NOT NULL,
     PRIMARY KEY (id)
 );
