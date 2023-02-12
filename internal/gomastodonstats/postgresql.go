@@ -3,6 +3,7 @@ package gomastodonstats
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	_ "github.com/lib/pq"
 )
@@ -46,6 +47,26 @@ func runIntQuery(schema string, q string) (int, error) {
 	}
 
 	rows, err := db.Query(q)
+	if err != nil {
+		return res, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		rows.Scan(&res)
+	}
+
+	return res, err
+}
+
+func runIntQueryWithTime(schema string, q string, t time.Time) (int, error) {
+	var res int
+	db, err := getConnection(schema)
+	if err != nil {
+		return res, err
+	}
+
+	rows, err := db.Query(q, t)
 	if err != nil {
 		return res, err
 	}
