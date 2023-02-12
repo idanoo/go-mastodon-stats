@@ -26,7 +26,11 @@ func Run() {
 		sendToMatrix(updatedMetrics)
 
 		// Only post weekly here
-		weekday := time.Now().Weekday()
+		localTime, err := time.LoadLocation(TIMEZONE)
+		if err != nil {
+			log.Fatal(err)
+		}
+		weekday := time.Now().Local().In(localTime).Weekday()
 		if weekday == time.Monday {
 			postToMastodon(updatedMetrics)
 		}
