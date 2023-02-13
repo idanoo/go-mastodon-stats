@@ -86,6 +86,22 @@ func getUserCounts() ([]metric, error) {
 			log.Printf("%s user count: %d", MASTODON_IDENTIFIER, userCount)
 			metrics = append(metrics, m)
 		}
+
+		// Extra metrics for DB only
+		userCount1W, err := runIntQuery(MASTODON_DB_SCHEMA, MASTODON_1W_ACTIVE_USER_QUERY)
+		if err != nil {
+			log.Println(err)
+		} else {
+			customMetrics := []metric{
+				{
+					Service:     MATRIX_IDENTIFIDER,
+					MetricName:  METRICNAME_1W_USERCOUNT,
+					MetricValue: userCount1W,
+				},
+			}
+
+			_ = persistMetrics(customMetrics)
+		}
 	}
 
 	if MOBILIZON_DB_SCHEMA != "" {

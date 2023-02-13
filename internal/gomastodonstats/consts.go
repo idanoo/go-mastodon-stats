@@ -22,7 +22,8 @@ var (
 	MASTODON_CLIENT_PASSWORD string
 
 	// UserCount metric name
-	METRICNAME_USERCOUNT = "userCount"
+	METRICNAME_USERCOUNT    = "userCount"
+	METRICNAME_1W_USERCOUNT = "userCount1W"
 
 	// This is hardcoded because.. well configs are annoying
 	SERVICE_LINKS = map[string]string{
@@ -44,9 +45,10 @@ var (
 	MATRIX_IDENTIFIDER = "matrix"
 
 	// Mastodon
-	MASTODON_DB_SCHEMA  string
-	MASTODON_USER_QUERY = "SELECT count(*) FROM users WHERE disabled = False AND confirmed_at IS NOT NULL AND approved = True;"
-	MASTODON_IDENTIFIER = "mastodon"
+	MASTODON_DB_SCHEMA            string
+	MASTODON_USER_QUERY           = "SELECT count(*) FROM users WHERE disabled = False AND confirmed_at IS NOT NULL AND approved = True;"
+	MASTODON_1W_ACTIVE_USER_QUERY = "SELECT count(*) FROM users WHERE disabled = False AND confirmed_at IS NOT NULL AND approved = True AND current_sign_in_at >=  now() - interval '1 week';"
+	MASTODON_IDENTIFIER           = "mastodon"
 
 	// Mobilizon
 	MOBILIZON_DB_SCHEMA  string
