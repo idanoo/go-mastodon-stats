@@ -94,7 +94,7 @@ func getUserCounts() ([]metric, error) {
 		} else {
 			customMetrics := []metric{
 				{
-					Service:     MATRIX_IDENTIFIDER,
+					Service:     MASTODON_IDENTIFIER,
 					MetricName:  METRICNAME_1W_USERCOUNT,
 					MetricValue: userCount1W,
 				},
