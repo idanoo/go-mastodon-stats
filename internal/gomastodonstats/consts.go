@@ -32,6 +32,7 @@ var (
 		MASTODON_IDENTIFIER:  "https://mastodon.nz",
 		MOBILIZON_IDENTIFIER: "https://openevents.nz",
 		PEERTUBE_IDENTIFIER:  "https://peertube.nz",
+		BOOKWYRM_IDENTIFIER:  "https://bookworm.nz",
 	}
 
 	// Pixelfed
@@ -59,4 +60,9 @@ var (
 	PEERTUBE_DB_SCHEMA  string
 	PEERTUBE_USER_QUERY = "SELECT count(*) FROM \"user\" WHERE blocked = False;"
 	PEERTUBE_IDENTIFIER = "peertube"
+
+	// BookWyrm
+	BOOKWYRM_DB_SCHEMA  string
+	BOOKWYRM_USER_QUERY = "SELECT count(*) FROM bookwyrm_user WHERE local = True AND is_active = True;"
+	BOOKWYRM_IDENTIFIER = "bookwyrm"
 )

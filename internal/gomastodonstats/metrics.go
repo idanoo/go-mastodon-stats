@@ -138,6 +138,23 @@ func getUserCounts() ([]metric, error) {
 		}
 	}
 
+	if BOOKWYRM_DB_SCHEMA != "" {
+		userCount, err := runIntQuery(BOOKWYRM_DB_SCHEMA, BOOKWYRM_USER_QUERY)
+		if err != nil {
+			log.Println(err)
+		} else {
+			m := metric{
+				Service:                 BOOKWYRM_IDENTIFIER,
+				MetricName:              METRICNAME_USERCOUNT,
+				MetricValue:             userCount,
+				PreviousDayMetricValue:  getLastMetric(BOOKWYRM_IDENTIFIER),
+				PreviousWeekMetricValue: getLastWeekMetric(BOOKWYRM_IDENTIFIER),
+			}
+			log.Printf("%s user count: %d", BOOKWYRM_IDENTIFIER, userCount)
+			metrics = append(metrics, m)
+		}
+	}
+
 	return metrics, nil
 }
 
