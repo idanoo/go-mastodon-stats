@@ -65,4 +65,9 @@ var (
 	BOOKWYRM_DB_SCHEMA  string
 	BOOKWYRM_USER_QUERY = "SELECT count(*) FROM bookwyrm_user WHERE local = True AND is_active = True;"
 	BOOKWYRM_IDENTIFIER = "bookwyrm"
+
+	// Calckey
+	CALCKEY_DB_SCHEMA  string
+	CALCKEY_USER_QUERY = `SELECT count(*) FROM "user" WHERE "isDeleted" = False and "host" IS NULL;`
+	CALCKEY_IDENTIFIER = "calckey"
 )

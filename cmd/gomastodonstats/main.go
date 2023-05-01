@@ -78,6 +78,7 @@ func main() {
 	gms.MOBILIZON_DB_SCHEMA = os.Getenv("MOBILIZON_DB_SCHEMA")
 	gms.PEERTUBE_DB_SCHEMA = os.Getenv("PEERTUBE_DB_SCHEMA")
 	gms.BOOKWYRM_DB_SCHEMA = os.Getenv("BOOKWYRM_DB_SCHEMA")
+	gms.CALCKEY_DB_SCHEMA = os.Getenv("CALCKEY_DB_SCHEMA")
 
 	gms.Run()
 }

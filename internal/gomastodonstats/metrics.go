@@ -155,6 +155,23 @@ func getUserCounts() ([]metric, error) {
 		}
 	}
 
+	if CALCKEY_DB_SCHEMA != "" {
+		userCount, err := runIntQuery(CALCKEY_DB_SCHEMA, CALCKEY_USER_QUERY)
+		if err != nil {
+			log.Println(err)
+		} else {
+			m := metric{
+				Service:                 CALCKEY_IDENTIFIER,
+				MetricName:              METRICNAME_USERCOUNT,
+				MetricValue:             userCount,
+				PreviousDayMetricValue:  getLastMetric(CALCKEY_IDENTIFIER),
+				PreviousWeekMetricValue: getLastWeekMetric(CALCKEY_IDENTIFIER),
+			}
+			log.Printf("%s user count: %d", CALCKEY_IDENTIFIER, userCount)
+			metrics = append(metrics, m)
+		}
+	}
+
 	return metrics, nil
 }
 
