@@ -33,6 +33,7 @@ var (
 		MOBILIZON_IDENTIFIER: "https://openevents.nz",
 		PEERTUBE_IDENTIFIER:  "https://peertube.nz",
 		BOOKWYRM_IDENTIFIER:  "https://bookworm.nz",
+		CALCKEY_IDENTIFIER:   "https://calckey.nz",
 	}
 
 	// Pixelfed
