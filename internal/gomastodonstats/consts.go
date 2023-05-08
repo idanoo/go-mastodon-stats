@@ -8,6 +8,10 @@ var (
 	POSTGRESQL_STATS_DB    string
 	POSTGRESQL_STATS_TABLE = "statsdb"
 
+	MYSQL_HOST string
+	MYSQL_USER string
+	MYSQL_PASS string
+
 	TIMEZONE string
 
 	MATRIX_WEBHOOK_URL     string
@@ -34,6 +38,7 @@ var (
 		PEERTUBE_IDENTIFIER:  "https://peertube.nz",
 		BOOKWYRM_IDENTIFIER:  "https://bookworm.nz",
 		CALCKEY_IDENTIFIER:   "https://calckey.nz",
+		WRITEAS_IDENTIFIER:   "https://write.nz",
 	}
 
 	// Pixelfed
@@ -71,4 +76,9 @@ var (
 	CALCKEY_DB_SCHEMA  string
 	CALCKEY_USER_QUERY = `SELECT count(*) FROM "user" WHERE "isDeleted" = False and "host" IS NULL;`
 	CALCKEY_IDENTIFIER = "calckey"
+
+	// Write.as
+	WRIETAS_DB_SCHEMA  string
+	WRITEAS_USER_QUERY = `SELECT count(*) FROM users WHERE status = 0`
+	WRITEAS_IDENTIFIER = "writeas"
 )

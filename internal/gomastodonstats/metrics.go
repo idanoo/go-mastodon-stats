@@ -172,6 +172,23 @@ func getUserCounts() ([]metric, error) {
 		}
 	}
 
+	if WRIETAS_DB_SCHEMA != "" {
+		userCount, err := runMySqlIntQuery(WRIETAS_DB_SCHEMA, WRITEAS_USER_QUERY)
+		if err != nil {
+			log.Println(err)
+		} else {
+			m := metric{
+				Service:                 WRITEAS_IDENTIFIER,
+				MetricName:              METRICNAME_USERCOUNT,
+				MetricValue:             userCount,
+				PreviousDayMetricValue:  getLastMetric(WRITEAS_IDENTIFIER),
+				PreviousWeekMetricValue: getLastWeekMetric(WRITEAS_IDENTIFIER),
+			}
+			log.Printf("%s user count: %d", WRITEAS_IDENTIFIER, userCount)
+			metrics = append(metrics, m)
+		}
+	}
+
 	return metrics, nil
 }
 

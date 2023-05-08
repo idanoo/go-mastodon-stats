@@ -6,7 +6,7 @@ Setup a new application, use the ID/SECRET in your .env with some user creds
     
 
 
-Create readonly account with access to stats DB
+Create readonly account with access to stats DB on postgres
 
 ```
 CREATE USER gomastodonstats WITH PASSWORD 'superrandompassword';
@@ -41,4 +41,10 @@ CREATE UNIQUE INDEX service_lookup ON statsdb USING btree (service,metric_name, 
 
 GRANT ALL ON ALL TABLES IN SCHEMA public TO gomastodonstats;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO gomastodonstats;
+```
+
+For write.as stats on MySQL
+```
+create user gomastodonstats@'%' identified by '<pass>';
+grant SELECT on writeasdb.* to 'gomastodonstats';
 ```

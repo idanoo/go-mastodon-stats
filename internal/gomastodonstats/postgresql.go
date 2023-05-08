@@ -9,7 +9,7 @@ import (
 )
 
 // Returns valid DSL for PSQL
-func getConnectionString(schema string) string {
+func getPostgresConnectionString(schema string) string {
 	return fmt.Sprintf(
 		"postgresql://%s:%s@%s/%s?sslmode=disable",
 		POSTGRESQL_USER,
@@ -20,13 +20,13 @@ func getConnectionString(schema string) string {
 }
 
 // Returns DB connection
-func getConnection(schema string) (*sql.DB, error) {
-	return sql.Open("postgres", getConnectionString(schema))
+func getPostgresConnection(schema string) (*sql.DB, error) {
+	return sql.Open("postgres", getPostgresConnectionString(schema))
 }
 
 // insertMetric to stats DB
 func insertValues(m metric) error {
-	db, err := getConnection(POSTGRESQL_STATS_DB)
+	db, err := getPostgresConnection(POSTGRESQL_STATS_DB)
 	if err != nil {
 		return err
 	}
@@ -41,7 +41,7 @@ func insertValues(m metric) error {
 
 func runIntQuery(schema string, q string) (int, error) {
 	var res int
-	db, err := getConnection(schema)
+	db, err := getPostgresConnection(schema)
 	if err != nil {
 		return res, err
 	}
@@ -61,7 +61,7 @@ func runIntQuery(schema string, q string) (int, error) {
 
 func runIntQueryWithTime(schema string, q string, t time.Time) (int, error) {
 	var res int
-	db, err := getConnection(schema)
+	db, err := getPostgresConnection(schema)
 	if err != nil {
 		return res, err
 	}

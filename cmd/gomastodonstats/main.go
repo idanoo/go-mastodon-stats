@@ -38,8 +38,12 @@ func main() {
 	gms.POSTGRESQL_STATS_DB = os.Getenv("POSTGRESQL_STATS_DB")
 	if gms.POSTGRESQL_STATS_DB == "" {
 		log.Fatal("POSTGRESQL_STATS_DB not set")
-
 	}
+
+	// Check MySQL info exists (Optional)
+	gms.MYSQL_HOST = os.Getenv("MYSQL_HOST")
+	gms.MYSQL_USER = os.Getenv("MYSQL_USER")
+	gms.MYSQL_PASS = os.Getenv("MYSQL_PASS")
 
 	// Load matrix data if exists, else set URL blank
 	gms.MATRIX_WEBHOOK_URL = os.Getenv("MATRIX_WEBHOOK_URL")
