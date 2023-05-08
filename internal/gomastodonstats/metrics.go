@@ -172,8 +172,8 @@ func getUserCounts() ([]metric, error) {
 		}
 	}
 
-	if WRIETAS_DB_SCHEMA != "" {
-		userCount, err := runMySqlIntQuery(WRIETAS_DB_SCHEMA, WRITEAS_USER_QUERY)
+	if WRITEAS_DB_SCHEMA != "" {
+		userCount, err := runMySqlIntQuery(WRITEAS_DB_SCHEMA, WRITEAS_USER_QUERY)
 		if err != nil {
 			log.Println(err)
 		} else {

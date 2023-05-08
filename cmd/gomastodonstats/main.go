@@ -83,7 +83,7 @@ func main() {
 	gms.PEERTUBE_DB_SCHEMA = os.Getenv("PEERTUBE_DB_SCHEMA")
 	gms.BOOKWYRM_DB_SCHEMA = os.Getenv("BOOKWYRM_DB_SCHEMA")
 	gms.CALCKEY_DB_SCHEMA = os.Getenv("CALCKEY_DB_SCHEMA")
-	gms.WRIETAS_DB_SCHEMA = os.Getenv("WRIETAS_DB_SCHEMA")
+	gms.WRITEAS_DB_SCHEMA = os.Getenv("WRITEAS_DB_SCHEMA")
 
 	gms.Run()
 }

@@ -78,7 +78,7 @@ var (
 	CALCKEY_IDENTIFIER = "calckey"
 
 	// Write.as
-	WRIETAS_DB_SCHEMA  string
+	WRITEAS_DB_SCHEMA  string
 	WRITEAS_USER_QUERY = `SELECT count(*) FROM users WHERE status = 0`
 	WRITEAS_IDENTIFIER = "writeas"
 )
