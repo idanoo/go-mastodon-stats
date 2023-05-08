@@ -10,7 +10,7 @@ import (
 // Returns valid DSL for PSQL
 func getMySQLConnectionString(schema string) string {
 	return fmt.Sprintf(
-		"%s:%s@%s/%s",
+		"%s:%s@tcp(%s:3306)/%s",
 		MYSQL_USER,
 		MYSQL_PASS,
 		MYSQL_HOST,
