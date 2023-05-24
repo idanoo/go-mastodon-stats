@@ -34,7 +34,8 @@ func postToMastodon(metrics []metric) {
 	msg = msg + "\n\n" + "#WeeklyStats"
 
 	toot := &mastodon.Toot{
-		Status: msg,
+		Visibility: "unlisted",
+		Status:     msg,
 	}
 
 	_, err = c.PostStatus(context.Background(), toot)

@@ -34,6 +34,7 @@ var (
 		PIXELFED_IDENTIFIER:  "https://pixelfed.nz",
 		MATRIX_IDENTIFIDER:   "https://mtrx.nz",
 		MASTODON_IDENTIFIER:  "https://mastodon.nz",
+		TINKERNZ_IDENTIFIER:  "https://tinker.nz",
 		MOBILIZON_IDENTIFIER: "https://openevents.nz",
 		PEERTUBE_IDENTIFIER:  "https://peertube.nz",
 		BOOKWYRM_IDENTIFIER:  "https://bookworm.nz",
@@ -56,6 +57,10 @@ var (
 	MASTODON_USER_QUERY           = "SELECT count(*) FROM users WHERE disabled = False AND confirmed_at IS NOT NULL AND approved = True;"
 	MASTODON_1W_ACTIVE_USER_QUERY = "SELECT count(*) FROM users WHERE disabled = False AND confirmed_at IS NOT NULL AND approved = True AND current_sign_in_at >=  now() - interval '1 week';"
 	MASTODON_IDENTIFIER           = "mastodon"
+
+	// Mastodon 2
+	TINKERNZ_DB_SCHEMA  string
+	TINKERNZ_IDENTIFIER = "tinkernz"
 
 	// Mobilizon
 	MOBILIZON_DB_SCHEMA  string

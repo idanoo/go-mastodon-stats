@@ -104,6 +104,24 @@ func getUserCounts() ([]metric, error) {
 		}
 	}
 
+	// Second masto instance
+	if TINKERNZ_DB_SCHEMA != "" {
+		userCount, err := runIntQuery(TINKERNZ_DB_SCHEMA, MASTODON_USER_QUERY)
+		if err != nil {
+			log.Println(err)
+		} else {
+			m := metric{
+				Service:                 TINKERNZ_IDENTIFIER,
+				MetricName:              METRICNAME_USERCOUNT,
+				MetricValue:             userCount,
+				PreviousDayMetricValue:  getLastMetric(TINKERNZ_IDENTIFIER),
+				PreviousWeekMetricValue: getLastWeekMetric(TINKERNZ_IDENTIFIER),
+			}
+			log.Printf("%s user count: %d", TINKERNZ_IDENTIFIER, userCount)
+			metrics = append(metrics, m)
+		}
+	}
+
 	if MOBILIZON_DB_SCHEMA != "" {
 		userCount, err := runIntQuery(MOBILIZON_DB_SCHEMA, MOBILIZON_USER_QUERY)
 		if err != nil {
